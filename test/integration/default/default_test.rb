@@ -10,7 +10,11 @@ unless os.windows?
   end
 end
 
+  describe package('mongodb') do
+    its('version') { should cmp '1:3.6.3-0ubuntu1' }
+end
+
 # This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
+  describe port(27017), :skip do
+    it { should be_listening }
 end

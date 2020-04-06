@@ -1,4 +1,3 @@
-#
 # Cookbook:: Mongodb
 # Spec:: default
 #
@@ -14,16 +13,20 @@ describe 'Mongodb::default' do
 
     it 'converges successfully' do
       expect { chef_run }.to_not raise_error
+    end 
+
+    it 'should be in source list' do
+      expect{ is_expected.to render_file('/etc/apt/sources.list').with_content("mongo") }
     end
-  end
 
-  context 'When all attributes are default, on CentOS 7' do
-    # for a complete list of available platforms and versions see:
-    # https://github.com/chefspec/fauxhai/blob/master/PLATFORMS.md
-    platform 'centos', '7'
+    # Test to check if Recipe includes 'package sc-mongodb'
+    it 'should install mongodb' do
+      expect(chef_run).to install_package 'mongodb'
+    end
 
-    it 'converges successfully' do
-      expect { chef_run }.to_not raise_error
+    # Test to check if my provision file includes starting nginx
+      it 'should start mongodb --helloo! install it this is just a message' do
+        expect(chef_run).to start_service 'mongodb'
     end
   end
 end
